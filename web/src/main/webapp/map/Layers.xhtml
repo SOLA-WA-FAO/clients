@@ -432,6 +432,12 @@
                                                                 <f:facet name="header">#{msg.LAYERS_PAGE_VALUE}</f:facet>
                                                                 #{m.value}
                                                             </h:column>
+                                                            <h:column>
+                                                                <f:facet name="header">#{msg.LAYERS_PAGE_CLIENT_OPTION}</f:facet>
+                                                                <ui:fragment rendered="#{m.forClient}">
+                                                                    <i class="glyphicon glyphicon-ok"></i>
+                                                                </ui:fragment>
+                                                            </h:column>
                                                         </h:dataTable>
                                                     </h:panelGroup>
                                                 </div>
@@ -488,6 +494,16 @@
                                                                 class="form-control"
                                                                 maxlength="100"
                                                                 autocomplete="off" />
+                                                </div>
+                                            </div>
+                                            <div class="splitter"></div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label>
+                                                        #{msg.LAYERS_PAGE_CLIENT_OPTION}
+                                                    </label><br />
+                                                    <h:selectBooleanCheckbox id="chbxForClient"
+                                                                             value="#{layersPageBean.layerMetadata.forClient}" />
                                                 </div>
                                             </div>
                                         </div>
