@@ -56,11 +56,11 @@ public class LanguageBean extends AbstractBackingBean {
                 return defaultPage;
             }
 
-            String localizaedPage = defaultPage.substring(0, defaultPage.lastIndexOf("."))
+            String localizedPage = defaultPage.substring(0, defaultPage.lastIndexOf("."))
                     + "_" + getLocaleCodeForBundle() + defaultPage.substring(defaultPage.lastIndexOf("."), defaultPage.length());
-            URL pageUrl = FacesContext.getCurrentInstance().getExternalContext().getResource(localizaedPage);
+            URL pageUrl = FacesContext.getCurrentInstance().getExternalContext().getResource(localizedPage);
             if (pageUrl != null) {
-                return localizaedPage;
+                return localizedPage;
             }
             return defaultPage;
         } catch (MalformedURLException ex) {
