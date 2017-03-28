@@ -51,7 +51,7 @@
                                 // Add WMS layers
                                 var wmsLayer = new OpenLayers.Layer.WMS("#{l.title}", "#{l.url}",
                                     {layers: '#{l.wmsLayers}' #{communityAreaPageBean.getLayerParamsString(l, true)}},
-                                    {#{communityAreaPageBean.getLayerOptionsString(l, false)}});
+                                    {minResolution: 0.001, maxResolution: 200, #{communityAreaPageBean.getLayerOptionsString(l, false)}});
                                 wmsLayer.legendOptions = "#{communityAreaPageBean.getLegendOptions(l)}";
                                 layers.push(wmsLayer);
                             </ui:fragment>
