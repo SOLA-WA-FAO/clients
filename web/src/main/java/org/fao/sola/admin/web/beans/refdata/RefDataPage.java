@@ -18,6 +18,7 @@ import org.sola.common.logging.LogUtility;
 import org.sola.services.common.EntityAction;
 import org.sola.services.common.repository.entities.AbstractCodeEntity;
 import org.sola.admin.services.ejb.refdata.businesslogic.RefDataAdminEJBLocal;
+import org.sola.admin.services.ejb.refdata.entities.AdministrativeBoundaryStatus;
 import org.sola.admin.services.ejb.refdata.entities.ApplicationStatusType;
 import org.sola.admin.services.ejb.refdata.entities.Authority;
 import org.sola.admin.services.ejb.refdata.entities.AvailabilityStatus;
@@ -228,7 +229,9 @@ public class RefDataPage extends AbstractBackingBean {
             refClass = NegotiateType.class;
         } else if (type.equalsIgnoreCase("NEGOTIATE_STATUS")){
             refClass = NegotiateStatus.class;
-        }      
+        } else if (type.equalsIgnoreCase("BOUNDARY_STATUS")){
+            refClass = AdministrativeBoundaryStatus.class;
+        }    
 
         itemsHeader = msgProvider.getMessage(headerPrefix + type.toUpperCase() + "S");
         itemHeader = msgProvider.getMessage(headerPrefix + type.toUpperCase());
