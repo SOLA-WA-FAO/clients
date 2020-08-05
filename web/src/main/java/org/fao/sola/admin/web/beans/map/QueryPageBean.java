@@ -67,9 +67,6 @@ public class QueryPageBean extends AbstractBackingBean {
     public LocalizedValuesListBean getLocalizedDisplayValues() {
         return localizedDisplayValues;
     }
-    
-    public QueryPageBean() {
-    }
 
     @PostConstruct
     private void init() {

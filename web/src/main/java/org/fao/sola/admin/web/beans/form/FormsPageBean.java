@@ -138,9 +138,6 @@ public class FormsPageBean extends AbstractBackingBean {
     public LocalizedValuesListBean getLocalizedOptionNames() {
         return localizedOptionNames;
     }
-    
-    public FormsPageBean() {
-    }
 
     @PostConstruct
     private void init() {

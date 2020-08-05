@@ -58,6 +58,7 @@ public class DbBackupPageBean extends AbstractBackingBean {
     @Inject
     MessageBean msgBean;
 
+    private static final String FILE_SEPARATOR = System.getProperty("file.separator");
     private String dbHost;
     private String dbHostPort;
     private String dbUser;
@@ -162,8 +163,8 @@ public class DbBackupPageBean extends AbstractBackingBean {
         }
 
         // form the path to backup folder
-        fullPath = System.getProperty("user.home") + System.getProperty("file.separator") + dbBackupFolder
-                + System.getProperty("file.separator") + dbHost + dbHostPort + "_" + dbName;
+        fullPath = System.getProperty("user.home") + FILE_SEPARATOR + dbBackupFolder
+                + FILE_SEPARATOR + dbHost + dbHostPort + "_" + dbName;
         File f = new File(fullPath);
         if (!f.exists()) {
             f.mkdirs();
@@ -206,7 +207,7 @@ public class DbBackupPageBean extends AbstractBackingBean {
         try {
             // Generate backup file name
             Date date = Calendar.getInstance().getTime();
-            String fileName = getBackupFolder() + System.getProperty("file.separator")
+            String fileName = getBackupFolder() + FILE_SEPARATOR
                     + dbName + "_" + DateUtility.formatDate(date, "yyyy-MM-dd_HHmmss") + ".backup";
 
             // Do backup
@@ -214,7 +215,7 @@ public class DbBackupPageBean extends AbstractBackingBean {
             ProcessBuilder pb;
             
             pb = new ProcessBuilder(
-                    (dbUtilitiesFolder + System.getProperty("file.separator") + "pg_dump").replace("\\", "\\\\"),
+                    (dbUtilitiesFolder + FILE_SEPARATOR + "pg_dump").replace("\\", "\\\\"),
                     "--host", dbHost,
                     "--port", dbHostPort,
                     "--username", dbUser,
@@ -253,7 +254,7 @@ public class DbBackupPageBean extends AbstractBackingBean {
 
         ExternalContext ec = getExtContext();
 
-        File file = new File(getBackupFolder() + System.getProperty("file.separator") + fileName);
+        File file = new File(getBackupFolder() + FILE_SEPARATOR + fileName);
 
         if (!file.exists()) {
             return;
@@ -264,19 +265,29 @@ public class DbBackupPageBean extends AbstractBackingBean {
         ec.setResponseContentLength((int)file.length());
         ec.setResponseHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
 
-        InputStream fis = new FileInputStream(file);
-        OutputStream output = ec.getResponseOutputStream();
-        
-        byte[] buf = new byte[1024];
-        int bytesRead;
-        while ((bytesRead = fis.read(buf)) > 0) {
-            output.write(buf, 0, bytesRead);
-        }
-        fis.close();
+        InputStream fis=null;
+        OutputStream output=null;
+        try {
+            fis = new FileInputStream(file);
+            output = ec.getResponseOutputStream();
 
-        output.write(buf);
-        output.flush();
-        output.close();
+            byte[] buf = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = fis.read(buf)) > 0) {
+                output.write(buf, 0, bytesRead);
+            }
+            fis.close();
+
+            output.write(buf);
+            output.flush();
+        } finally {
+            if (fis!=null) {
+                fis.close();
+            }
+            if (output!=null) {
+                output.close();
+            }
+        }
 
         getContext().responseComplete();
     }
@@ -314,7 +325,7 @@ public class DbBackupPageBean extends AbstractBackingBean {
             Process p;
             ProcessBuilder pb;
             pb = new ProcessBuilder(
-                    (dbUtilitiesFolder + System.getProperty("file.separator") + "pg_restore").replace("\\", "\\\\"),
+                    (dbUtilitiesFolder + FILE_SEPARATOR + "pg_restore").replace("\\", "\\\\"),
                     "--host", dbHost,
                     "--port", dbHostPort,
                     "--username", dbUser,
@@ -322,7 +333,7 @@ public class DbBackupPageBean extends AbstractBackingBean {
                     "--clean",
                     "--no-password",
                     "--verbose",
-                    getBackupFolder() + System.getProperty("file.separator") + fileToRestore);
+                    getBackupFolder() + FILE_SEPARATOR + fileToRestore);
             
             Map<String, String> env = pb.environment();
             env.put("PGPASSWORD", userPassword);

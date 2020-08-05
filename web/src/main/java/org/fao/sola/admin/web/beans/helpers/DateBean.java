@@ -1,5 +1,6 @@
 package org.fao.sola.admin.web.beans.helpers;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,13 +13,12 @@ import org.sola.common.DateUtility;
  */
 @Named
 @ApplicationScoped
-public class DateBean {
+public class DateBean  implements Serializable {
+    private static final long serialVersionUID = 7526472295622776147L;
+    
     private String dateFormat = "dd/MM/yy";
     private String dateFormatForDisplay = "dd/MM/yyyy";
     private String timeFormat = "HH:mm";
-    
-    public DateBean(){
-    }
 
     public String getDateFormatForDisplay() {
         return dateFormatForDisplay;

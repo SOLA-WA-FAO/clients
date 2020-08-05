@@ -4,12 +4,11 @@
     <parent>
         <artifactId>sola-admin-main</artifactId>
         <groupId>org.fao.sola.admin</groupId>
-        <version>1504a</version>
+        <version>2006a</version>
     </parent>
     <groupId>org.fao.sola.admin</groupId>
     <artifactId>sola-admin-clients</artifactId>
     <packaging>pom</packaging>
-    <version>1504a</version>
     <name>Clients Admin POM</name>
     <modules>
         <module>web</module>

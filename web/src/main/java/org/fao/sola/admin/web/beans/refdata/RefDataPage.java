@@ -133,9 +133,6 @@ public class RefDataPage extends AbstractBackingBean {
         return localizedDescriptionValues;
     }
 
-    public RefDataPage() {
-    }
-
     @PostConstruct
     private void init() {
         String type = getRequestParam("type");

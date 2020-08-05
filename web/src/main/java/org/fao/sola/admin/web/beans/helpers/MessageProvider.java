@@ -26,9 +26,6 @@ public class MessageProvider implements Serializable {
     @Inject
     LanguageBean langBean;
     
-    public MessageProvider(){
-    }
-    
     /** 
      * Returns bundle with errors messages.
      * @return  

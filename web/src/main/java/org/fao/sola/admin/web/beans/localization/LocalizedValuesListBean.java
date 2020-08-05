@@ -29,12 +29,12 @@
  */
 package org.fao.sola.admin.web.beans.localization;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.fao.sola.admin.web.beans.helpers.ErrorKeys;
 import org.fao.sola.admin.web.beans.language.LanguageBean;
 import org.sola.common.StringUtility;
 import org.sola.admin.services.ejb.refdata.entities.Language;
@@ -45,7 +45,8 @@ import org.sola.admin.services.ejb.refdata.entities.Language;
  *
  * @see LocalizedValueBean
  */
-public class LocalizedValuesListBean {
+public class LocalizedValuesListBean  implements Serializable {
+    private static final long serialVersionUID = 7526472295622776147L;
 
     private LanguageBean languageBean;
     private List<LocalizedValueBean> localizedValues;

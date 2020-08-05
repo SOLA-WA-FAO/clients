@@ -45,9 +45,6 @@ public class FormsListBean extends AbstractBackingBean {
     private Part formFile;
 
     private FormTemplate formTemplate;
-    
-    public FormsListBean() {
-    }
 
     @PostConstruct
     private void init() {
@@ -106,8 +103,9 @@ public class FormsListBean extends AbstractBackingBean {
             throw new Exception(errors);
         }
 
+        ObjectInputStream in=null;
         try {
-            ObjectInputStream in = new ObjectInputStream(formFile.getInputStream());
+            in = new ObjectInputStream(formFile.getInputStream());
             formTemplate = (FormTemplate) in.readObject();
             in.close();
             runUpdate(new Runnable() {
@@ -120,6 +118,10 @@ public class FormsListBean extends AbstractBackingBean {
         } catch (Exception e) {
             LogUtility.log("Failed to import form", e);
             throw e;
+        } finally {
+            if (in!=null) {
+                in.close();
+            }
         }
     }
 

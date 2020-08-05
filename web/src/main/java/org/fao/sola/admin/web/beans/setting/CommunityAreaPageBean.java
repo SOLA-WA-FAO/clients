@@ -45,6 +45,7 @@ public class CommunityAreaPageBean extends AbstractBackingBean {
     private List<ConfigMapLayer> layers;
     private Setting communityArea;
     private boolean isOffline;
+    private static final String LEGEND_OPTIONS = "LEGEND_OPTIONS";
 
     public Setting getCommunityArea() {
         return communityArea;
@@ -85,7 +86,7 @@ public class CommunityAreaPageBean extends AbstractBackingBean {
 
         for (ConfigMapLayerMetadata param : layer.getMetadataList()) {
             if (!param.isForClient() && layer.getTypeCode().equalsIgnoreCase("wms") 
-                    && !param.getName().equalsIgnoreCase("LEGEND_OPTIONS")) {
+                    && !param.getName().equalsIgnoreCase(LEGEND_OPTIONS)) {
                 if (!result.equals("")) {
                     result += ", ";
                 }
@@ -108,7 +109,7 @@ public class CommunityAreaPageBean extends AbstractBackingBean {
         }
 
         for (ConfigMapLayerMetadata param : layer.getMetadataList()) {
-            if (param.getName().equalsIgnoreCase("LEGEND_OPTIONS")) {
+            if (param.getName().equalsIgnoreCase(LEGEND_OPTIONS)) {
                 return param.getValue();
             }
         }
@@ -126,7 +127,7 @@ public class CommunityAreaPageBean extends AbstractBackingBean {
 
         for (ConfigMapLayerMetadata param : layer.getMetadataList()) {
             if (param.isForClient() && layer.getTypeCode().equalsIgnoreCase("wms") 
-                    && !param.getName().equalsIgnoreCase("LEGEND_OPTIONS")) {
+                    && !param.getName().equalsIgnoreCase(LEGEND_OPTIONS)) {
                 if (!result.equals("")) {
                     result += ", ";
                 }

@@ -27,12 +27,14 @@
  */
 package org.fao.sola.admin.web.beans.localization;
 
+import java.io.Serializable;
 import org.sola.admin.services.ejb.refdata.entities.Language;
 
 /**
  * Represents localized value from multilingual string;
  */
-public class LocalizedValueBean {
+public class LocalizedValueBean  implements Serializable {
+    private static final long serialVersionUID = 7526472295622776147L;
     
     private Language language;
     private String localizedValue;

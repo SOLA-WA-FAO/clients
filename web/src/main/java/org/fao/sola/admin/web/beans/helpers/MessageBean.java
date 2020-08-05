@@ -1,5 +1,6 @@
 package org.fao.sola.admin.web.beans.helpers;
 
+import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
@@ -8,7 +9,8 @@ import javax.inject.Named;
  */
 @Named
 @RequestScoped
-public class MessageBean{
+public class MessageBean implements Serializable {
+    private static final long serialVersionUID = 7526472295622776147L;
 
     public static enum MESSAGE_TYPE{ERROR, WARNING, SUCCESS}
 

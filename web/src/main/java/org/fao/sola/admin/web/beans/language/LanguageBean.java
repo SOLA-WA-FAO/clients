@@ -1,6 +1,7 @@
 package org.fao.sola.admin.web.beans.language;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
@@ -25,7 +26,8 @@ import org.sola.admin.services.ejb.refdata.entities.Language;
 
 @Named
 @SessionScoped
-public class LanguageBean extends AbstractBackingBean {
+public class LanguageBean extends AbstractBackingBean  implements Serializable {
+    private static final long serialVersionUID = 7526472295622776147L;
 
     @EJB
     RefDataAdminEJBLocal refDataEjb;
@@ -37,9 +39,6 @@ public class LanguageBean extends AbstractBackingBean {
     private Language[] languages;
     private static final String ADMIN_LANGAUGE = "admin_language";
     private final String delimiter = "::::";
-
-    public LanguageBean() {
-    }
 
     @PostConstruct
     private void init() {

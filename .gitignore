@@ -5,6 +5,7 @@
 target/
 logs/
 wsdl/
+.scannerwork/
 
 # Files to ignore 
 catalog.xml
