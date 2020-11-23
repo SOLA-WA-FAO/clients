@@ -50,10 +50,6 @@
             <url-pattern>/error.xhtml</url-pattern>
             <url-pattern>/javax.faces.resource/*</url-pattern>
         </web-resource-collection>
-        <user-data-constraint>
-            <description/>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>
     </security-constraint>
     <security-constraint>
         <display-name>Restricted pages</display-name>
@@ -65,10 +61,6 @@
         <auth-constraint>
             <role-name>*</role-name>
         </auth-constraint>
-        <user-data-constraint>
-            <description/>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>
     </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>
