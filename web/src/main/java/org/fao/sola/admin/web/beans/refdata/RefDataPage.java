@@ -1,11 +1,11 @@
 package org.fao.sola.admin.web.beans.refdata;
 
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
+import jakarta.annotation.PostConstruct;
+import jakarta.ejb.EJB;
+import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import org.fao.sola.admin.web.beans.AbstractBackingBean;
 import org.fao.sola.admin.web.beans.helpers.ErrorKeys;
 import org.fao.sola.admin.web.beans.helpers.MessageBean;
@@ -54,6 +54,7 @@ import org.sola.admin.services.ejb.refdata.entities.PublicDisplayStatus;
 import org.sola.admin.services.ejb.refdata.entities.PublicDisplayType;
 import org.sola.admin.services.ejb.refdata.entities.RegistrationStatusType;
 import org.sola.admin.services.ejb.refdata.entities.RejectionReason;
+import org.sola.admin.services.ejb.refdata.entities.ReportGroup;
 import org.sola.admin.services.ejb.refdata.entities.RequestCategoryType;
 import org.sola.admin.services.ejb.refdata.entities.RequestDisplayGroup;
 import org.sola.admin.services.ejb.refdata.entities.Role;
@@ -231,7 +232,9 @@ public class RefDataPage extends AbstractBackingBean {
             refClass = NegotiateStatus.class;
         } else if (type.equalsIgnoreCase("BOUNDARY_STATUS")){
             refClass = AdministrativeBoundaryStatus.class;
-        }    
+        } else if (type.equalsIgnoreCase("REPORT_GROUP")) {
+            refClass = ReportGroup.class;
+        }
 
         itemsHeader = msgProvider.getMessage(headerPrefix + type.toUpperCase() + "S");
         itemHeader = msgProvider.getMessage(headerPrefix + type.toUpperCase());

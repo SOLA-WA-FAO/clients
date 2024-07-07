@@ -111,7 +111,7 @@ public class LocalizedValuesListBean {
         int i = 1;
 
         for (LocalizedValueBean localizedValue : localizedValues) {
-            str = str + localizedValue.getLocalizedValue();
+            str = str + StringUtility.empty(localizedValue.getLocalizedValue());
             if (i < localizedValues.size()) {
                 str = str + languageBean.getDelimiter();
             }

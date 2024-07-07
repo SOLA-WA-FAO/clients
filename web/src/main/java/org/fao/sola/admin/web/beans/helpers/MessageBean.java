@@ -1,7 +1,7 @@
 package org.fao.sola.admin.web.beans.helpers;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Named;
 
 /**
  * Used to display messages

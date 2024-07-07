@@ -227,7 +227,7 @@
                                             </ul>
                                         </li>
                                     </ui:fragment>
-                                    
+
                                     <ui:fragment rendered="#{not systemBean.isSolaCommunityServer}">
                                         <li><a href="#">#{msg.MAIN_MENU_SYSTEM}</a>
                                             <ul class="dropdown-menu">
@@ -295,6 +295,10 @@
                                                         #{msg.REFDATA_PAGE_REJECTION_REASONS}
                                                     </a>
                                                 </li>
+                                                <li><a href="#{request.contextPath}/refdata/RefData.xhtml?type=REPORT_GROUP">
+                                                        #{msg.REFDATA_PAGE_REPORT_GROUPS}
+                                                    </a>
+                                                </li>
                                             </ul>
                                         </li>
                                     </ui:fragment>
@@ -309,18 +313,25 @@
                                             <i class="icon-wrench"></i> #{msg.MAIN_MENU_SYSTEM_SETTINGS}
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="#{request.contextPath}/language/Language.xhtml">
+                                            <i class="icon-globe"></i> #{msg.MAIN_MENU_LANGUAGES}
+                                        </a>
+                                    </li>
                                     <ui:fragment rendered="#{systemBean.isSolaCommunityServer}">
-                                        <li><a href="#">#{msg.MAIN_MENU_OPEN_TENURE}</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="#{request.contextPath}/settings/CommunityArea.xhtml">
-                                                        <i class="icon-map-marker"></i> #{msg.MAIN_MENU_COMMUNITY_AREA}
-                                                    </a>
-                                                </li>
-                                                <li><a href="#{request.contextPath}/forms/Forms.xhtml">
-                                                        <i class="icon-tasks"></i> #{msg.FORMS_PAGE_TITLE}
-                                                    </a>
-                                                </li>
-                                            </ul>
+                                        <li>
+                                            <a href="#{request.contextPath}/projects/Projects.xhtml">
+                                                <i class="glyphicon glyphicon-briefcase"></i> #{msg.MAIN_MENU_PROJECTS}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#{request.contextPath}/reports/Reports.xhtml">
+                                                <i class="glyphicon glyphicon-stats"></i> #{msg.MAIN_MENU_REPORTS}
+                                            </a>
+                                        </li>
+                                        <li><a href="#{request.contextPath}/forms/Forms.xhtml">
+                                                <i class="icon-tasks"></i> #{msg.FORMS_PAGE_TITLE}
+                                            </a>
                                         </li>
                                     </ui:fragment>
                                 </ul>
@@ -356,11 +367,6 @@
                                     </a>
                                 </li>
                             </ui:fragment>
-                            <li>
-                                <a href="#{request.contextPath}/language/Language.xhtml">
-                                    <i class="icon-globe"></i> #{msg.MAIN_MENU_LANGUAGES}
-                                </a>
-                            </li>
                             <li>
                                 <a href="#">
                                     <i class="icon-hdd"></i> #{msg.MAIN_MENU_DB}

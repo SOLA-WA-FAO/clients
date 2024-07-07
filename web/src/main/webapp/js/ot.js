@@ -83,3 +83,43 @@ function parseDate(date) {
     }
     return timestamp;
 }
+
+/** 
+ * Retricts input for ID or code fields. Restriction pattern is [0-9A-Za-z_\-] 
+ * @param e Event object from input field 
+ */
+function restrictInputForIds(e) {
+    var pattern = /[0-9A-Za-z_\-]/g;
+    return restrictInput(e, pattern);
+}
+
+/** 
+ * Retricts input for numbers. Restriction pattern is [0-9\.] 
+ * @param e Event object from input field 
+ */
+function restrictInputDouble(e) {
+    var pattern = /[0-9\.]/g;
+    return restrictInput(e, pattern);
+}
+
+/** 
+ * Retricts input for numbers. Restriction pattern is [0-9\.] 
+ * @param e Event object from input field 
+ */
+function restrictInputInteger(e) {
+    var pattern = /[0-9]/g;
+    return restrictInput(e, pattern);
+}
+
+/** 
+ * Retricts input for input fields.
+ * @param e Event object from input field 
+ * @param pattern Regular expression pattern to use for restriction.
+ */
+function restrictInput(e, pattern) {
+    var keyCode = e.keyCode === 0 ? e.charCode : e.keyCode;
+    return (String.fromCharCode(keyCode).match(pattern) ||
+            ((e.keyCode === 8 || e.keyCode === 9 || e.keyCode === 46 ||
+                    e.keyCode === 36 || e.keyCode === 35 || e.keyCode === 37 ||
+                    e.keyCode === 39) && e.charCode !== e.keyCode));
+}

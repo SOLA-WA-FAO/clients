@@ -170,6 +170,41 @@ public class ErrorKeys {
      */
     public static final String REFDATA_PAGE_SELECT_RRR_GROUP = "REFDATA_PAGE_SELECT_RRR_GROUP";
     
+    /**
+     * - FIll in report ID
+     */
+    public static final String REPORTS_FILL_ID = "REPORTS_FILL_ID";
+    
+    /**
+     * - FIll in display name
+     */
+    public static final String REPORTS_FILL_DISPLAY_NAME = "REPORTS_FILL_DISPLAY_NAME";
+    
+    /**
+     * - Report ID already exists
+     */
+    public static final String REPORTS_ID_EXISTS = "REPORTS_ID_EXISTS";
+    
+    /**
+     * - Select report file
+     */
+    public static final String REPORTS_SELECT_FILE = "REPORTS_SELECT_FILE";
+    
+    /**
+     * - File %s was not found in the archive. Make sure the archive name is equal to the jasper file name. The use of sub-folders in the archive are not allowed.
+     */
+    public static final String REPORTS_JASPER_FILE_NOT_FOUND = "REPORTS_JASPER_FILE_NOT_FOUND";
+    
+    /**
+     * - Upload only JASPER or ZIP files
+     */
+    public static final String REPORTS_WRONG_FILE_FORMAT = "REPORTS_WRONG_FILE_FORMAT";
+    
+    /**
+     * - Reports folder path was not found
+     */
+    public static final String REPORTS_FOLDER_PATH_NOT_FOUND = "REPORTS_FOLDER_PATH_NOT_FOUND";
+        
     // Settings
     /**
      * - Fill in name
@@ -283,4 +318,12 @@ public class ErrorKeys {
     
     /** Cache has not been reset. CacheEJB may not be found */
     public static final String RESET_CACHE_PAGE_FAILED = "RESET_CACHE_PAGE_FAILED";
+    
+    // Projects
+    
+    /** Enter project name */
+    public static final String PROJECTS_FILL_NAME = "PROJECTS_FILL_NAME";
+   
+    /** Provide project area */
+    public static final String PROJECTS_PROVIDE_PROJECT_AREA = "PROJECTS_PROVIDE_PROJECT_AREA";
 }

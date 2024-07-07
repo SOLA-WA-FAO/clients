@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="../templates/BasicTemplate.xhtml">
+            <ui:define name="title">
+                #{msg.MAIN_MENU_PROJECTS}
+            </ui:define>
+            <ui:define name="content">
+                <div class="PageName">
+                    <i class="icon-globe"></i> #{msg.MAIN_MENU_PROJECTS}
+                </div>
+                <div class="content" style="max-width: 700px;">
+                    <h:panelGroup id="pnlProjects">
+
+                        <a href="Project.xhtml" class="BlueLink" title="#{msg.GENERAL_LABEL_ADD}">
+                            <i class="glyphicon glyphicon-plus"></i> #{msg.GENERAL_LABEL_ADD}
+                        </a>
+                        <h:dataTable value="#{projectsPageBean.projects}" var="p"
+                                     class="table table-striped"
+                                     headerClass="table-header">
+                            <h:column>
+                                <f:facet name="header">#{msg.PROJECTS_NAME}</f:facet>
+                                <span style="white-space: nowrap;">
+                                    <h:commandLink style="padding-right: 5px;"
+                                                   title="#{msg.GENERAL_LABEL_DELETE}"
+                                                   onclick="return confirm('#{msg.GENERAL_CONFIRM_DELETE}')">
+                                        <f:ajax listener="#{projectsPageBean.deleteProject(p.id)}" 
+                                                event="click" onevent="onDeleteProject" onerror="handleAjaxError"
+                                                render=":mainForm:pnlProjects :headerForm:systemMessage" />
+                                        <i class="glyphicon glyphicon-remove"></i>
+                                    </h:commandLink>
+                                    <a href="Project.xhtml?id=#{p.id}" class="BlueLink" title="#{msg.GENERAL_LABEL_EDIT}">
+                                        <i class="glyphicon glyphicon-pencil" style="padding-right: 7px;"></i>
+                                    </a>
+                                    #{p.displayName}
+                                </span>
+                            </h:column>
+                        </h:dataTable>
+                    </h:panelGroup>
+                </div>
+
+                <script type="text/javascript">
+                    function animateProjectsPanel() {
+                        $('#mainForm\\:pnlProjects').hide();
+                        $('#mainForm\\:pnlProjects').fadeIn('slow');
+                    }
+
+                    function onDeleteProject(data) {
+                        handleAjax(data);
+                        var status = data.status;
+                        switch (status) {
+                            case "success":
+                                animateProjectsPanel();
+                                break;
+                        }
+                    }
+                </script>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

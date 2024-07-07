@@ -1,11 +1,11 @@
 package org.fao.sola.admin.web.beans.setting;
 
 import java.util.List;
-import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
+import jakarta.ejb.EJB;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import org.fao.sola.admin.web.beans.AbstractBackingBean;
 import org.fao.sola.admin.web.beans.helpers.ErrorKeys;
 import org.fao.sola.admin.web.beans.helpers.MessageBean;

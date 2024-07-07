@@ -100,4 +100,8 @@ public class MessagesKeys {
     
     /** Cache has been reset successfully */
     public static final String RESET_CACHE_PAGE_SUCCESS = "RESET_CACHE_PAGE_SUCCESS";
+    
+    /** Project has been saved successfully */
+    public static final String PROJECTS_SAVED_SUCCESS = "PROJECTS_SAVED_SUCCESS";
+    
 }

@@ -5,23 +5,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
+import jakarta.annotation.PostConstruct;
+import jakarta.ejb.EJB;
+import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import org.fao.sola.admin.web.beans.AbstractBackingBean;
 import org.fao.sola.admin.web.beans.helpers.ErrorKeys;
 import org.fao.sola.admin.web.beans.helpers.MessageProvider;
+import org.fao.sola.admin.web.beans.language.LanguageBean;
 import org.sola.common.StringUtility;
 import org.sola.services.common.EntityAction;
 import org.sola.admin.services.ejb.search.businesslogic.SearchAdminEJBLocal;
+import org.sola.admin.services.ejb.search.repository.entities.ProjectSearchResult;
 import org.sola.admin.services.ejb.search.repository.entities.UserSearchParams;
 import org.sola.admin.services.ejb.search.repository.entities.UserSearchResult;
 import org.sola.admin.services.ejbs.admin.businesslogic.AdministratorEJBLocal;
 import org.sola.admin.services.ejbs.admin.businesslogic.repository.entities.Group;
 import org.sola.admin.services.ejbs.admin.businesslogic.repository.entities.User;
 import org.sola.admin.services.ejbs.admin.businesslogic.repository.entities.UserGroup;
+import org.sola.admin.services.ejbs.admin.businesslogic.repository.entities.UserProject;
 
 /**
  * Contains methods and properties to manage {@link Group}
@@ -32,7 +35,10 @@ public class UserPageBean extends AbstractBackingBean {
 
     private User user;
     private List<UserSearchResult> searchResults;
+    private ProjectSearchResult[] allProjects;
+    private String[] selectedProjects;
     private Group[] groups;
+    private Map<String, String> mapProjects;
     private Map<String, String> mapGroups;
     private String[] selectedGroupCodes;
     private UserSearchParams searchParams;
@@ -42,6 +48,9 @@ public class UserPageBean extends AbstractBackingBean {
     @Inject
     MessageProvider msgProvider;
 
+    @Inject
+    LanguageBean langBean;
+    
     @EJB
     AdministratorEJBLocal adminEjb;
 
@@ -64,6 +73,10 @@ public class UserPageBean extends AbstractBackingBean {
         return mapGroups;
     }
 
+    public Map<String, String> getMapProjects() {
+        return mapProjects;
+    }
+    
     public String[] getSelectedGroupCodes() {
         return selectedGroupCodes;
     }
@@ -87,6 +100,18 @@ public class UserPageBean extends AbstractBackingBean {
         this.passwordConfirmation = passwordConfirmation;
     }
 
+    public ProjectSearchResult[] getAllProjects() {
+        return allProjects;
+    }
+
+    public String[] getSelectedProjects() {
+        return selectedProjects;
+    }
+
+    public void setSelectedProjects(String[] selectedProjects) {
+        this.selectedProjects = selectedProjects;
+    }
+    
     public String getGroupName(String id) {
         if (id != null && groups != null) {
             for (Group item : groups) {
@@ -108,13 +133,23 @@ public class UserPageBean extends AbstractBackingBean {
                 mapGroups.put(g.getName(), g.getId());
             }
         }
+        mapProjects = new HashMap<>();
+        List<ProjectSearchResult> projectsList = searchEjb.getAllProjects(langBean.getLocale());
+        if (projectsList != null) {
+            allProjects = projectsList.toArray(new ProjectSearchResult[projectsList.size()]);
+            for (ProjectSearchResult p : projectsList) {
+                mapProjects.put(p.getDisplayName(), p.getId());
+            }
+        }
+        
+        mapProjects.put("", "");
         mapGroups.put("", "");
         searchParams = new UserSearchParams();
         search();
     }
 
     public void search() {
-        searchResults = searchEjb.searchUsers(searchParams);
+        searchResults = searchEjb.searchUsers(searchParams, langBean.getLocale());
     }
 
     public void loadUser(String userName) {
@@ -122,6 +157,7 @@ public class UserPageBean extends AbstractBackingBean {
             user = new User();
             user.setId(UUID.randomUUID().toString());
             user.setUserGroups(new ArrayList<UserGroup>());
+            user.setProjects(new ArrayList<UserProject>());
         } else {
             user = adminEjb.getUser(userName);
         }
@@ -147,6 +183,27 @@ public class UserPageBean extends AbstractBackingBean {
         int i = 0;
         for (Group group : groupsToSelect) {
             selectedGroupCodes[i] = group.getId();
+            i += 1;
+        }
+        
+        // Select/unselect projects
+        List<UserProject> projectsToSelect = new ArrayList<>();
+        if (user.getProjects()!= null) {
+            for (UserProject userProject : user.getProjects()) {
+                if (allProjects != null) {
+                    for (ProjectSearchResult project : allProjects) {
+                        if (userProject.getProjectId().equalsIgnoreCase(project.getId())) {
+                            projectsToSelect.add(userProject);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        selectedProjects = new String[projectsToSelect.size()];
+        i = 0;
+        for (UserProject project : projectsToSelect) {
+            selectedProjects[i] = project.getProjectId();
             i += 1;
         }
     }
@@ -229,6 +286,46 @@ public class UserPageBean extends AbstractBackingBean {
                     userGroup.setGroupId(groupId);
                     userGroup.setUserId(user.getId());
                     user.getUserGroups().add(userGroup);
+                }
+            }
+        }
+        
+        // Prepare projects related to the user
+        // Delete
+        if (user.getProjects()!= null) {
+            for (UserProject userProject : user.getProjects()) {
+                boolean found = false;
+                if (selectedProjects != null) {
+                    for (String projectId : selectedProjects) {
+                        if (userProject.getProjectId().equalsIgnoreCase(projectId)) {
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+                if (!found) {
+                    userProject.setEntityAction(EntityAction.DELETE);
+                }
+            }
+        }
+
+        // Add
+        if (selectedProjects != null) {
+            for (String projectId : selectedProjects) {
+                boolean found = false;
+                if (user.getProjects()!= null) {
+                    for (UserProject userProject : user.getProjects()) {
+                        if (userProject.getProjectId().equalsIgnoreCase(projectId)) {
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+                if (!found) {
+                    UserProject userProject = new UserProject();
+                    userProject.setProjectId(projectId);
+                    userProject.setUserId(user.getId());
+                    user.getProjects().add(userProject);
                 }
             }
         }

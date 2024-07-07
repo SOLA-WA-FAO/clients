@@ -24,53 +24,64 @@
                     <i class="icon-user"></i> #{msg.MAIN_MENU_USERS}
                 </div>
                 <div class="content">
-                    <div class="row" style="width: 850px;padding-bottom: 10px;">
-                        <div class="col-md-11">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <label>
-                                        #{msg.USER_PAGE_USER_NAME}
-                                    </label>
-                                    <h:inputText id="txtUserNameParam" class="form-control"
-                                                 value="#{userPageBean.searchParams.userName}"
-                                                 autocomplete="off" />
-                                </div>
-                                <div class="col-md-3">
-                                    <label>
-                                        #{msg.USER_PAGE_FIRST_NAME}
-                                    </label>
-                                    <h:inputText id="txtFirstNameParam" class="form-control"
-                                                 value="#{userPageBean.searchParams.firstName}"
-                                                 autocomplete="off" />
-                                </div>
-                                <div class="col-md-3">
-                                    <label>
-                                        #{msg.USER_PAGE_LAST_NAME}
-                                    </label>
-                                    <h:inputText id="txtLastNameParam" class="form-control"
-                                                 value="#{userPageBean.searchParams.lastName}"
-                                                 autocomplete="off" />
-                                </div>
-                                <div class="col-md-3">
-                                    <label>
-                                        #{msg.GROUP_PAGE_GROUP}
-                                    </label>
-                                    <h:selectOneListbox id="cbxGroups" value="#{userPageBean.searchParams.groupId}" 
-                                                        size="1" class="form-control">
-                                        <f:selectItems value="#{userPageBean.mapGroups}" var="g" />
-                                    </h:selectOneListbox>
-                                </div>
-                            </div>        
-                        </div>
-                        <div class="col-md-1">
-                            <label>&nbsp;</label><br />
-                            <h:commandButton class="btn btn-default" value="#{msg.GENERAL_LABEL_SEARCH}">
-                                <f:ajax event="click" execute=":mainForm:txtUserNameParam :mainForm:txtFirstNameParam :mainForm:txtLastNameParam :mainForm:cbxGroups" 
-                                        render=":mainForm:pnlCodes"
-                                        onerror="handleAjaxError"
-                                        listener="#{userPageBean.search()}" />
-                            </h:commandButton>
-                        </div>
+                    <div class="row" style="width: 950px;padding-bottom: 10px;">
+                        <table class="tableGrid">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <label>
+                                            #{msg.USER_PAGE_USER_NAME}
+                                        </label>
+                                        <h:inputText id="txtUserNameParam" class="form-control"
+                                                     value="#{userPageBean.searchParams.userName}"
+                                                     autocomplete="off" />
+                                    </td>
+                                    <td>
+                                        <label>
+                                            #{msg.USER_PAGE_FIRST_NAME}
+                                        </label>
+                                        <h:inputText id="txtFirstNameParam" class="form-control"
+                                                     value="#{userPageBean.searchParams.firstName}"
+                                                     autocomplete="off" />
+                                    </td>
+                                    <td>
+                                        <label>
+                                            #{msg.USER_PAGE_LAST_NAME}
+                                        </label>
+                                        <h:inputText id="txtLastNameParam" class="form-control"
+                                                     value="#{userPageBean.searchParams.lastName}"
+                                                     autocomplete="off" />
+                                    </td>
+                                    <td>
+                                        <label>
+                                            #{msg.GROUP_PAGE_GROUP}
+                                        </label>
+                                        <h:selectOneListbox id="cbxGroups" value="#{userPageBean.searchParams.groupId}" 
+                                                            size="1" class="form-control">
+                                            <f:selectItems value="#{userPageBean.mapGroups}" var="g" />
+                                        </h:selectOneListbox>
+                                    </td>
+                                    <td>
+                                        <label>
+                                            #{msg.MAIN_MENU_PROJECTS}
+                                        </label>
+                                        <h:selectOneListbox id="cbxProjects" value="#{userPageBean.searchParams.projectId}" 
+                                                            size="1" class="form-control">
+                                            <f:selectItems value="#{userPageBean.mapProjects}" var="p" />
+                                        </h:selectOneListbox>
+                                    </td>
+                                    <td>
+                                        <label>&nbsp;</label><br />
+                                        <h:commandButton class="btn btn-default" value="#{msg.GENERAL_LABEL_SEARCH}">
+                                            <f:ajax event="click" execute=":mainForm:txtUserNameParam :mainForm:txtFirstNameParam :mainForm:txtLastNameParam :mainForm:cbxGroups :mainForm:cbxProjects" 
+                                                    render=":mainForm:pnlCodes"
+                                                    onerror="handleAjaxError"
+                                                    listener="#{userPageBean.search()}" />
+                                        </h:commandButton>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
 
                     <h:panelGroup id="pnlCodes">
@@ -120,6 +131,10 @@
                                     #{r.groupsList}
                             </h:column>
                             <h:column>
+                                <f:facet name="header">#{msg.MAIN_MENU_PROJECTS}</f:facet>
+                                #{r.projectsList}
+                            </h:column>
+                            <h:column>
                                 <f:facet name="header">#{msg.USER_PAGE_ACTIVE}</f:facet>
                                 <ui:fragment rendered="#{r.active}">
                                     <i class="glyphicon glyphicon-ok"></i>
@@ -143,6 +158,7 @@
                                             <ul class="nav nav-tabs">
                                                 <li class="active"><a href="#general" data-toggle="tab">#{msg.GENERAL_LABEL_GENERAL}</a></li>
                                                 <li><a href="#groups" data-toggle="tab">#{msg.MAIN_MENU_GROUPS}</a></li>
+                                                <li><a href="#projects" data-toggle="tab">#{msg.MAIN_MENU_PROJECTS}</a></li>
                                             </ul>
 
                                             <div class="tab-content">
@@ -280,6 +296,18 @@
                                                                               layout="pageDirection">
                                                             <f:selectItems value="#{userPageBean.groups}" var="g" 
                                                                            itemLabel="#{g.name}" itemValue="#{g.id}" />
+                                                        </h:selectManyCheckbox>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="tab-pane" id="projects" style="padding-top: 10px;">
+                                                    <label>
+                                                        #{msg.MAIN_MENU_PROJECTS}
+                                                    </label>
+                                                    <div class="groupsList">
+                                                        <h:selectManyCheckbox value="#{userPageBean.selectedProjects}" layout="pageDirection">
+                                                            <f:selectItems value="#{userPageBean.allProjects}" var="p" 
+                                                                           itemLabel="#{p.displayName}" itemValue="#{p.id}" />
                                                         </h:selectManyCheckbox>
                                                     </div>
                                                 </div>

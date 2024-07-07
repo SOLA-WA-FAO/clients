@@ -1,9 +1,9 @@
 package org.fao.sola.admin.web.beans.cache;
 
-import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
+import jakarta.ejb.EJB;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import org.fao.sola.admin.web.beans.AbstractBackingBean;
 import org.fao.sola.admin.web.beans.helpers.ErrorKeys;
 import org.fao.sola.admin.web.beans.helpers.MessageBean;

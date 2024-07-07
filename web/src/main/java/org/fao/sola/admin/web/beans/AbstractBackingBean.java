@@ -4,14 +4,16 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
-import javax.annotation.Resource;
-import javax.ejb.EJBAccessException;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.transaction.Status;
-import javax.transaction.UserTransaction;
+import jakarta.annotation.Resource;
+import jakarta.ejb.EJBAccessException;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Status;
+import jakarta.transaction.UserTransaction;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import org.sola.common.DynamicFormException;
 import org.sola.common.SOLAException;
 import org.sola.common.SOLANoDataException;
@@ -108,6 +110,25 @@ public abstract class AbstractBackingBean implements Serializable {
         return getRequest().getSession();
     }
 
+    /**
+     * Returns array list of active entities
+     * @param entities List of entities
+     * @return 
+     */
+    protected <T extends AbstractEntity> T[] getEntitiesArray(List<T> entities) {
+        if (entities!= null && entities.size() > 0) {
+            List<T> entitiesArray = new ArrayList<>();
+
+            for (T enity : entities) {
+                if (enity.getEntityAction() == null || (!enity.getEntityAction().equals(EntityAction.DELETE))) {
+                    entitiesArray.add(enity);
+                }
+            }
+            return entitiesArray.toArray((T[]) Array.newInstance(entities.get(0).getClass(), entitiesArray.size()));
+        }
+        return null;
+    }
+    
     /**
      * Holds a reference to the UserTransction. Injected using @Resource
      */
