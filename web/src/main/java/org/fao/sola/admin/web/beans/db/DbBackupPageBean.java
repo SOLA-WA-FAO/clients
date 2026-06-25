@@ -127,7 +127,10 @@ public class DbBackupPageBean extends AbstractBackingBean {
             int dbNameIndex = url.indexOf("/", portIndex) + 1;
             dbHost = url.substring(hostIndex, portIndex - 1);
             dbHostPort = url.substring(portIndex, dbNameIndex - 1);
-            dbName = url.substring(dbNameIndex, url.indexOf("?", dbNameIndex));
+            if(url.indexOf("?", dbNameIndex) > -1)
+                dbName = url.substring(dbNameIndex, url.indexOf("?", dbNameIndex));
+            else
+                dbName = url.substring(dbNameIndex);
             dbUser = meta.getUserName();
             dbUtilitiesFolder = systemEjb.getSetting(ConfigConstants.DB_UTILITIES_FOLDER, "");
         } catch (Exception ex) {

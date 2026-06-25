@@ -159,8 +159,26 @@ OT.Map = function(mapOptions) {
 
     try {
         if(!isOffline){
-            var gsat = new OpenLayers.Layer.Google("Google Earth", {type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 22});
-            var gmap = new OpenLayers.Layer.Google("Google Map", {numZoomLevels: 20, visibility: false});
+            //var gsat = new OpenLayers.Layer.Google("Google Earth", {type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 22});
+            //var gmap = new OpenLayers.Layer.Google("Google Map", {numZoomLevels: 20, visibility: false});
+            
+            var gsat = new OpenLayers.Layer.XYZ(
+                    "Google Earth",
+                    "https://mt1.google.com/vt/lyrs=s?x=${x}&y=${y}&z=${z}",
+                    {
+                        numZoomLevels: 22,
+                        sphericalMercator: true
+                    }
+            );
+
+            var gmap = new OpenLayers.Layer.XYZ(
+                    "Google Map",
+                    "https://mt1.google.com/vt/lyrs=m?x=${x}&y=${y}&z=${z}",
+                    {
+                        numZoomLevels: 22,
+                        sphericalMercator: true
+                    }
+            );
             map.addLayers([gsat, gmap]);
         }
     } catch (e) {
